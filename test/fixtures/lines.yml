@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  song: one
+  words: MyString
+  index: 1
+
+two:
+  song: two
+  words: MyString
+  index: 1

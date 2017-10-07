@@ -8,13 +8,18 @@ end
 ruby '2.3.4'
 
 gem 'rails', '~> 5.1.4'
-gem 'sqlite3'
+gem 'pg'
 gem 'puma', '~> 3.7'
 
 group :development, :test do
-  gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  gem 'byebug'
+  gem 'awesome_print'
 end
 
 group :development do
   gem 'listen', '>= 3.0.5', '< 3.2'
+end
+
+group :test do
+  gem 'rspec-rails'
 end
