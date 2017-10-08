@@ -1,6 +1,6 @@
 class Parser
   def self.cleanup(song_text)
-    lines = song_text.lines
+    lines = song_text.gsub(/\n{3,}/, "\n\n").lines
     new_lines = []
 
 
@@ -10,9 +10,10 @@ class Parser
       if line.blank? && chord_line?(lines[index+1]) && index != 0 && !chord_line?(lines[index-1])
         new_lines << ''
         new_lines << ''
+      else
+        new_lines << new_line if valid_line?(new_line)
       end
 
-      new_lines << new_line if valid_line?(new_line)
     end
 
     output_text = new_lines.join("\n").strip
