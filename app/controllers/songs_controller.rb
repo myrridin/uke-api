@@ -54,4 +54,8 @@ class SongsController < ApplicationController
       chords: song.lines.map(&:chord_placements).flatten.map(&:to_json)
     }
   end
+
+  def cleanup_text
+    render json: {cleaned_text: Parser.cleanup(params[:song_text])}
+  end
 end
