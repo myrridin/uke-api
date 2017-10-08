@@ -36,7 +36,6 @@ class SongsController < ApplicationController
       return
     end
 
-
     render json: {success: true, id: song.id}
   end
 
