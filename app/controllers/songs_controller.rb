@@ -42,7 +42,7 @@ class SongsController < ApplicationController
   def show
     song = Song.where(id: params[:id]).first
 
-    unless song.id
+    unless song
       render json: {success: false, error: "Song with id #{params[:id]} could not be found."}, status: :not_found
       return
     end
