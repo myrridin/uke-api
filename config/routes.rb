@@ -1,3 +1,3 @@
 Rails.application.routes.draw do
-  post 'songs/create'
+  resources :songs, only: [:show, :create]
 end

@@ -11,4 +11,8 @@ class Song < ApplicationRecord
 
     lines_with_chords.join("\n")
   end
+
+  def lines
+    Line.where(song_id: id).order(:index)
+  end
 end

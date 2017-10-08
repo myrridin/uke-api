@@ -16,4 +16,15 @@ class SongsController < ApplicationController
 
     render json: {success: true, id: song.id}
   end
+
+  def show
+    song = Song.find(params[:id])
+
+    render json: {
+      id: song.id,
+      title: song.name,
+      lyrics: song.lines.map(&:words),
+      chords: song.lines.map(&:chord_placements).flatten.map(&:to_json)
+    }
+  end
 end
