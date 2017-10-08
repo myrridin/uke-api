@@ -10,6 +10,7 @@ ruby '2.3.4'
 gem 'rails', '~> 5.1.4'
 gem 'pg'
 gem 'puma', '~> 3.7'
+gem 'rack-cors'
 
 group :development, :test do
   gem 'byebug'
