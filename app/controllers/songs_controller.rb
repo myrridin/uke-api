@@ -2,23 +2,45 @@ class SongsController < ApplicationController
   def create
     song = Song.create(name: params[:title])
 
+    unless song.id
+      render json: {success: false, error: 'Could not create song'}, status: :bad_request
+      return
+    end
+
     line_index = 1
     lines = {}
 
     params[:lyrics].each do |line|
-      lines[line_index] = Line.create!(words: line, index: line_index, song: song).id
+      line = Line.create!(words: line, index: line_index, song: song)
+
+      unless line.id
+        render json: {success: false, error: "Could not create line #{line_index}"}, status: :bad_request
+        return
+      end
+
+      lines[line_index] = line.id
       line_index += 1
     end
 
     params[:chords].each do |chord_hash|
-      ChordPlacement.create!(chord: chord_hash[:chord], line_id: lines[chord_hash[:line]], position: chord_hash[:position])
+      chord_placement = ChordPlacement.create(chord: chord_hash[:chord], line_id: lines[chord_hash[:line]], position: chord_hash[:position])
+
+      unless chord_placement.id
+        render json: {success: false, error: "Could not create line with params #{chord_hash}"}, status: :bad_request
+        return
+      end
     end
 
     render json: {success: true, id: song.id}
   end
 
   def show
-    song = Song.find(params[:id])
+    song = Song.where(id: params[:id]).first
+
+    unless song.id
+      render json: {success: false, error: "Song with id #{params[:id]} could not be found."}, status: :not_found
+      return
+    end
 
     render json: {
       id: song.id,

@@ -1,6 +1,8 @@
 class Song < ApplicationRecord
   has_many :lines
 
+  validates_presence_of :name
+
   def to_text
     lines_with_chords = lines.map do |line|
       [

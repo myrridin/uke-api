@@ -35,6 +35,38 @@ RSpec.describe SongsController, type: :request do
       expect(Song.last.name).to eq 'My Awesome Song'
     end
 
+    context 'when the title is nil' do
+      let(:params) do
+        {
+          title: nil,
+          lyrics: [
+            "When I look up",
+            "And see the sun",
+            "It is",
+            "Awesome"
+          ],
+          chords: [
+            {
+              chord: "Am",
+              line: 1,
+              position: 3
+            },
+            {
+              chord: "F",
+              line: 1,
+              position: 10
+            }
+          ]
+        }.to_json.to_s
+      end
+
+      it 'returns a 400' do
+        post '/songs', params: params, headers: headers
+        expect(response).to_not be_successful
+        expect(JSON.parse(response.body)['error']).to eq 'Could not create song'
+      end
+    end
+
     it 'creates the associated lines in the right order' do
       post '/songs', params: params, headers: headers
       expect(response).to be_successful
